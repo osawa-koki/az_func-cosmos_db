@@ -24,7 +24,7 @@ jobs:
       with:
         terraform_version: 1.0.0
     - name: Create terraform.tfvars file
-      run: echo "${{ secrets.TFVARS }}" > terraform.tfvars
+      run: echo $'${{ secrets.TFVARS }}' > terraform.tfvars
       working-directory: ${{ env.working-directory }}
     - name: Terraform Init
       run: terraform init
