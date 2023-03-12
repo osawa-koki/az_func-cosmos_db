@@ -8,8 +8,6 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "general"
-    storage_account_name = "terraform4osawakoki"
-    container_name       = "azfunc-cosmosdb"
     key                  = "azfunc-cosmosdb.tfstate"
   }
 }
