@@ -16,4 +16,8 @@ resource "azurerm_linux_function_app" "az_func" {
   storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
   https_only                 = true
   site_config {}
+
+  app_settings = {
+    "ENVIRONMENT" = "dev"
+  }
 }
