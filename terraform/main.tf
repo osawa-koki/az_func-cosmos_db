@@ -16,6 +16,11 @@ terraform {
 
 provider "azurerm" {
   features {}
+  authenticating_using_service_principal = true
+  subscription_id                        = var.subscription_id
+  client_id                              = var.client_id
+  client_secret                          = var.client_secret
+  tenant_id                              = var.tenant_id
 }
 
 resource "azurerm_resource_group" "resource_group" {

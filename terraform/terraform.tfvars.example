@@ -1,3 +1,7 @@
 project_name = "azfunc-cosmosdb"
 function_app_name = "azfunc-cosmosdb-func"
 storage_account_name = "azfunc-cosmosdb-storage"
+subscription_id = "00000000-0000-0000-0000-000000000000"
+client_id = "00000000-0000-0000-0000-000000000000"
+client_secret = "00000000-0000-0000-0000-000000000000"
+tenant_id = "00000000-0000-0000-0000-000000000000"
