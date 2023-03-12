@@ -18,6 +18,6 @@ resource "azurerm_linux_function_app" "az_func" {
   site_config {}
 
   app_settings = {
-    "ENVIRONMENT" = "dev"
+    "COSMOSDB_CONNECTION_STRING" = "mongodb://${azurerm_cosmosdb_account.cosmosdb.name}:${azurerm_cosmosdb_account.cosmosdb.primary_master_key}@${azurerm_cosmosdb_account.cosmosdb.name}.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb"
   }
 }
