@@ -10,11 +10,12 @@
 | シークレット名 | 説明 |
 | --- | --- |
 | AZURE_STORAGE_ACCESS_KEY | Azure Storage Accountのアクセスキー |
-| CONTAINER_NAME | Azure Storage Accountのコンテナ名 (バックエンドサービス) |
-| STORAGRE_ACOUNT_NAME | Azure Storage Accountのアカウント名 (バックエンドサービス) |
+| STORAGRE_ACOUNT_NAME | Azure Storage Accountのアカウント名 (バックエンドサービス) / 事前に作成する必要があります。 |
+| CONTAINER_NAME | Azure Storage Accountのコンテナ名 (バックエンドサービス) / 事前に作成する必要があります。 |
 | TFVARS | Terraformの変数ファイルの内容 (`terraform.tfvars`) |
 | AZURE_RESOURCE_GROUP | Azure上のリソースグループ名 (`terraform.tfvars`の`project_name`) |
 | AZURE_FUNCTIONAPP_NAME | Azure上のFunction App名 (`terraform.tfvars`の`function_app_name`) |
+| AZURE_CREDENTIALS | AzureのサービスプリンシパルのJSON |
 
 ### Azure CLIのインストール
 
@@ -44,3 +45,4 @@ az ad sp create-for-rbac --name "★プリンシパル名★" --role contributor
 | tenant_id | テナントID |
 
 これらを`terraform.tfvars`に記載します。  
+また、このJSON全体を`AZURE_CREDENTIALS`という名前でGitHubシークレットに設定します。  
