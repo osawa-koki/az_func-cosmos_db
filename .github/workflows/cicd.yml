@@ -54,8 +54,8 @@ jobs:
     - name: Get Azure Functions Publish Profile
       run: |
         az functionapp deployment list-publishing-profiles
-          --name ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          --resource-group ${{ env.AZURE_RESOURCE_GROUP }}
+          -g ${{ env.AZURE_RESOURCE_GROUP }}
+          -n ${{ env.AZURE_FUNCTIONAPP_NAME }}
           --xml >> ${{ env.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
       uses: actions/setup-dotnet@v1
