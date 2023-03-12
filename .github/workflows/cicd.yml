@@ -35,5 +35,5 @@ jobs:
       run: terraform plan
       working-directory: ${{ env.working-directory }}
     - name: Terraform Apply
-      run: terraform apply --auto-approve
+      run: terraform apply --auto-approve -refresh-only
       working-directory: ${{ env.working-directory }}
