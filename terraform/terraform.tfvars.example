@@ -1,6 +1,3 @@
 project_name = "azfunc-cosmosdb"
-backend_storage_account_name = "terraform4osawakoki"
-backend_container_name = "azfunc-cosmosdb-container"
 function_app_name = "azfunc-cosmosdb-func"
 storage_account_name = "azfunc-cosmosdb-storage"
-
