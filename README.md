@@ -49,4 +49,4 @@ az ad sp create-for-rbac --name "★プリンシパル名★" --role contributor
 
 ## 参考文献
 
-- [GitHub Actions を使用した継続的デリバリー](https://learn.microsoft.com/ja-jp/azure/azure-functions/functions-how-to-github-actions?tabs=dotnet)
+- [GitHub Actionsを使用した継続的デリバリー](https://learn.microsoft.com/ja-jp/azure/azure-functions/functions-how-to-github-actions?tabs=dotnet)
