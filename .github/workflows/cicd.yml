@@ -26,7 +26,7 @@ jobs:
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 3.47.0
+        terraform_version: 1.3.7
     - name: Create terraform.tfvars file
       run: echo $'${{ secrets.TFVARS }}' > terraform.tfvars
       working-directory: ${{ env.working-directory }}
