@@ -1,6 +1,6 @@
 # az_func-cosmos_db
 
-`Azure Function` + `Cosmos DB` + `C#`でWEBサービスを構築するサンプルです。  
+`Azure Function` + `Cosmos DB`でWEBサービスを構築するサンプルです。  
 `Terraform`でAzure上にリソースを構築し、`GitHub Actions`でAzure上のリソースをデプロイします。  
 
 ## 準備
