@@ -11,8 +11,8 @@ on:
 
 env:
   working-directory: ./terraform
-  AZURE_RESOURCE_GROUP: azfunc-cosmosdb # `terraform.tfvars`の`project_name`と同じ
-  AZURE_FUNCTIONAPP_NAME: azfunc-cosmosdb-func # `terraform.tfvars`の`function_app_name`と同じ
+  AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+  AZURE_FUNCTIONAPP_NAME: ${{ secrets.AZURE_FUNCTIONAPP_NAME }}
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './api'
   DOTNET_VERSION: '6.0'
 

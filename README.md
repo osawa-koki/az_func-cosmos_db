@@ -12,7 +12,9 @@
 | AZURE_STORAGE_ACCESS_KEY | Azure Storage Accountのアクセスキー |
 | CONTAINER_NAME | Azure Storage Accountのコンテナ名 (バックエンドサービス) |
 | STORAGRE_ACOUNT_NAME | Azure Storage Accountのアカウント名 (バックエンドサービス) |
-| TFVARS | Terraformの変数ファイルの内容 |
+| TFVARS | Terraformの変数ファイルの内容 (`terraform.tfvars`) |
+| AZURE_RESOURCE_GROUP | Azure上のリソースグループ名 (`terraform.tfvars`の`project_name`) |
+| AZURE_FUNCTIONAPP_NAME | Azure上のFunction App名 (`terraform.tfvars`の`function_app_name`) |
 
 ### Azure CLIのインストール
 
