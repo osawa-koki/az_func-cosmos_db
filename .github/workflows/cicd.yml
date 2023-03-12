@@ -55,7 +55,7 @@ jobs:
       id: profile
       run: |
         profile=$(az functionapp deployment list-publishing-profiles -g ${{ env.AZURE_RESOURCE_GROUP }} -n ${{ env.AZURE_FUNCTIONAPP_NAME }} --xml)
-        echo "::set-output name=profile::$profile"
+        printf "%s" "$profile" | tr -d '\n' | tr -d '\r' | xargs -0 -I *** sh -c 'echo "AZURE_PUBLISH_PROFILE=$(echo *** | base64 --decode)" >> $GITHUB_ENV'
     - name: Set Publish Profile as Environment Variable
       run: |
         echo ${{ steps.profile.outputs.profile }} | tr -d '\n' | tr -d '\r' | xargs -0 -I {} sh -c 'echo "AZURE_PUBLISH_PROFILE=$(echo {} | base64 --decode)" >> $GITHUB_ENV'
