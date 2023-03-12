@@ -46,3 +46,7 @@ az ad sp create-for-rbac --name "★プリンシパル名★" --role contributor
 
 これらを`terraform.tfvars`に記載します。  
 また、このJSON全体を`AZURE_CREDENTIALS`という名前でGitHubシークレットに設定します。  
+
+## 参考文献
+
+- [GitHub Actions を使用した継続的デリバリー](https://learn.microsoft.com/ja-jp/azure/azure-functions/functions-how-to-github-actions?tabs=dotnet)
