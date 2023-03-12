@@ -27,6 +27,7 @@ az login
 ```
 
 ログインが完了したら、サービスプリンシパルを作成します。  
+[参考](https://github.com/marketplace/actions/azure-cli-action#configure-azure-credentials-as-github-secret)  
 
 ```shell
 az ad sp create-for-rbac --name "★プリンシパル名★" --role contributor  --scopes /subscriptions/★サブスクリプションID★ --sdk-auth
