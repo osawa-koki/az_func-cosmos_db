@@ -1,0 +1,37 @@
+name: Terraform State Management
+
+on:
+  push:
+    branches:
+      - main
+      - develop # 一時的に追加
+  pull_request:
+    branches:
+      - main
+
+env:
+  working-directory: ./terraform
+  ARM_ACCESS_KEY: ${{ secrets.AZURE_STORAGE_ACCESS_KEY }}
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0
+    - name: Create terraform.tfvars file
+      run: echo "${{ secrets.TFVARS }}" > terraform.tfvars
+      working-directory: ${{ env.working-directory }}
+    - name: Terraform Init
+      run: terraform init -backend-config="access_key=$ARM_ACCESS_KEY"
+      working-directory: ${{ env.working-directory }}
+    - name: Terraform Plan
+      run: terraform plan
+      working-directory: ${{ env.working-directory }}
+    - name: Terraform Apply
+      run: terraform apply --auto-approve
+      working-directory: ${{ env.working-directory }}
