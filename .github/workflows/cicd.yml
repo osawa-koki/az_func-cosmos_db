@@ -14,7 +14,7 @@ env:
   AZURE_RESOURCE_GROUP: azfunc-cosmosdb
   AZURE_FUNCTIONAPP_NAME: azfunc-cosmosdb-func
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './api'
-  DOTNET_VERSION: '6'
+  DOTNET_VERSION: '6.0'
 
 jobs:
   # terraform:
