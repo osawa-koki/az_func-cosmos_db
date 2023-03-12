@@ -19,10 +19,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-    - name: Login via Azure CLI
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
       with:
