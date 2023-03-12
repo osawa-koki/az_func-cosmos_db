@@ -1,1 +1,35 @@
 # az_func-cosmos_db
+
+`Azure Function` + `Cosmos DB` + `C#`でWEBサービスを構築するサンプルです。  
+`Terraform`でAzure上にリソースを構築し、`GitHub Actions`でAzure上のリソースをデプロイします。  
+
+## 準備
+
+以下のGitHubシークレットを設定します。  
+
+| シークレット名 | 説明 |
+| --- | --- |
+| AZURE_CREDENTIALS | Azureサブスクリプションのサービスプリンシパルの情報 |
+| AZURE_STORAGE_ACCESS_KEY | Azure Storage Accountのアクセスキー |
+| CONTAINER_NAME | Azure Storage Accountのコンテナ名 (バックエンドサービス) |
+| STORAGRE_ACOUNT_NAME | Azure Storage Accountのアカウント名 (バックエンドサービス) |
+| TFVARS | Terraformの変数ファイルの内容 |
+
+### Azure CLIのインストール
+
+Azure CLIをインストールします。  
+[Install Azure CLI | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli)  
+
+以下のコマンドでログインします。  
+
+```shell
+az login
+```
+
+ログインが完了したら、サービスプリンシパルを作成します。  
+
+```shell
+az ad sp create-for-rbac --name "★プリンシパル名★" --role contributor  --scopes /subscriptions/★サブスクリプションID★ --sdk-auth
+```
+
+これで出力されたJSONを`AZURE_CREDENTIALS`シークレットに設定します。  
