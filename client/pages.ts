@@ -14,6 +14,11 @@ const pages = [
     path: '/insert/',
     name: 'Insert',
   },
+  {
+    emoji: '🔔',
+    path: '/list/',
+    name: 'List',
+  },
 ];
 
 export default pages;
