@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace azfunc_cosmosdb
 {
-  public class User
+  public class UserInsert
   {
     [JsonProperty("name")]
     [Required(ErrorMessage = "The name field is required.")]
@@ -36,12 +36,12 @@ namespace azfunc_cosmosdb
     [FunctionName("Insert")]
     [OpenApiOperation(operationId: "Run", tags: new[] { "user" })]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-    [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(User), Required = true, Description = "The **User** parameter")]
+    [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(UserInsert), Required = true, Description = "The **User** parameter")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
     public async Task<IActionResult> Insert(
       [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
     {
-      var user = JsonConvert.DeserializeObject<User>(await new StreamReader(req.Body).ReadToEndAsync());
+      var user = JsonConvert.DeserializeObject<UserInsert>(await new StreamReader(req.Body).ReadToEndAsync());
       var id = ObjectId.GenerateNewId();
 
       var validationContext = new ValidationContext(user, serviceProvider: null, items: null);
