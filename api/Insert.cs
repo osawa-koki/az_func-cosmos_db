@@ -41,9 +41,6 @@ namespace azfunc_cosmosdb
     public async Task<IActionResult> Insert(
       [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
     {
-      // mongodbに挿入
-
-      // ドキュメントを作成
       var user = JsonConvert.DeserializeObject<User>(await new StreamReader(req.Body).ReadToEndAsync());
       var id = ObjectId.GenerateNewId();
 
