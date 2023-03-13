@@ -15,9 +15,9 @@ namespace azfunc_cosmosdb
 {
   public struct User
   {
-    public string name { get; set; }
-    public string profession { get; set; }
-    public int age { get; set; }
+    public string Name { get; set; }
+    public string Profession { get; set; }
+    public int Age { get; set; }
   }
 
   public partial class Program
@@ -39,9 +39,9 @@ namespace azfunc_cosmosdb
       var document = new BsonDocument
       {
         { "_id", id },
-        { "name", user.name },
-        { "profession", user.profession },
-        { "age", user.age }
+        { "name", user.Name },
+        { "profession", user.Profession },
+        { "age", user.Age }
       };
 
       // ドキュメントを挿入
@@ -50,9 +50,9 @@ namespace azfunc_cosmosdb
       // レスポンスを返す
       return new OkObjectResult(new {
         id = id.ToString(),
-        user.name,
-        user.profession,
-        user.age,
+        user.Name,
+        user.Profession,
+        user.Age,
       });
     }
   }
