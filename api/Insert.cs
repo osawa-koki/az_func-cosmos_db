@@ -25,7 +25,7 @@ namespace azfunc_cosmosdb
     [FunctionName("Insert")]
     [OpenApiOperation(operationId: "Run", tags: new[] { "user" })]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-    [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(User), Required = true, Description = "The **Name** parameter")]
+    [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(User), Required = true, Description = "The **User** parameter")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
     public async Task<IActionResult> Insert(
       [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
@@ -44,11 +44,8 @@ namespace azfunc_cosmosdb
         { "age", user.age }
       };
 
-      // コレクションを取得
-      var collection = mongo_database!.GetCollection<BsonDocument>("users");
-
       // ドキュメントを挿入
-      collection.InsertOne(document);
+      users_collection.InsertOne(document);
 
       // レスポンスを返す
       return new OkObjectResult(new {
