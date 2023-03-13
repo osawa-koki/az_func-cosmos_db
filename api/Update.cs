@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -30,6 +32,14 @@ namespace azfunc_cosmosdb
       var filter = filterBuilder.Eq("_id", new ObjectId(id));
 
       var user = JsonConvert.DeserializeObject<User>(await new StreamReader(req.Body).ReadToEndAsync());
+
+      var validationContext = new ValidationContext(user, serviceProvider: null, items: null);
+      var validationResults = new List<ValidationResult>();
+      bool isValid = Validator.TryValidateObject(user, validationContext, validationResults, true);
+      if (isValid == false)
+      {
+        return new BadRequestObjectResult(validationResults);
+      }
 
       var updateBuilder = Builders<BsonDocument>.Update;
       var update = updateBuilder
