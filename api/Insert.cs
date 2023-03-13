@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -8,21 +7,25 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MongoDB.Bson;
 using Newtonsoft.Json;
 
 namespace azfunc_cosmosdb
 {
+  public struct User
+  {
+    public string name { get; set; }
+    public string profession { get; set; }
+    public int age { get; set; }
+  }
+
   public partial class Program
   {
     [FunctionName("Insert")]
-    [OpenApiOperation(operationId: "Run", tags: new[] { "name" })]
+    [OpenApiOperation(operationId: "Run", tags: new[] { "user" })]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-    [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **Name** parameter")]
-    [OpenApiParameter(name: "profession", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **Profession** parameter")]
-    [OpenApiParameter(name: "age", In = ParameterLocation.Query, Required = true, Type = typeof(int), Description = "The **Age** parameter")]
+    [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(User), Required = true, Description = "The **Name** parameter")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
     public async Task<IActionResult> Insert(
       [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
@@ -30,17 +33,16 @@ namespace azfunc_cosmosdb
       // mongodbに挿入
 
       // ドキュメントを作成
-      var name = req.Query["name"];
-      var profession = req.Query["profession"];
-      var age = int.Parse(req.Query["age"]);
-
-      Console.WriteLine($"name: {name} profession: {profession} age: {age}");
+      var user = JsonConvert.DeserializeObject<User>(await new StreamReader(req.Body).ReadToEndAsync());
+      var id = ObjectId.GenerateNewId();
 
       var document = new BsonDocument
       {
-        { "age", age }
+        { "_id", id },
+        { "name", user.name },
+        { "profession", user.profession },
+        { "age", user.age }
       };
-
 
       // コレクションを取得
       var collection = mongo_database!.GetCollection<BsonDocument>("users");
@@ -49,7 +51,12 @@ namespace azfunc_cosmosdb
       collection.InsertOne(document);
 
       // レスポンスを返す
-      return new OkObjectResult("Inserted");
+      return new OkObjectResult(new {
+        id = id.ToString(),
+        user.name,
+        user.profession,
+        user.age,
+      });
     }
   }
 }
