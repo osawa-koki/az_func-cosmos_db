@@ -15,33 +15,17 @@ using Newtonsoft.Json;
 
 namespace azfunc_cosmosdb
 {
-  public class UserInsert
-  {
-    [JsonProperty("name")]
-    [Required(ErrorMessage = "The name field is required.")]
-    public string Name { get; set; }
-
-    [JsonProperty("profession")]
-    [Required(ErrorMessage = "The profession field is required.")]
-    public string Profession { get; set; }
-
-    [JsonProperty("age")]
-    [Required(ErrorMessage = "The age field is required.")]
-    [Range(1, int.MaxValue, ErrorMessage = "The age must be a positive integer.")]
-    public int Age { get; set; }
-  }
-
   public partial class Program
   {
     [FunctionName("Insert")]
     [OpenApiOperation(operationId: "Run", tags: new[] { "user" })]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-    [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(UserInsert), Required = true, Description = "The **User** parameter")]
+    [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(User), Required = true, Description = "The **User** parameter")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
     public async Task<IActionResult> Insert(
       [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
     {
-      var user = JsonConvert.DeserializeObject<UserInsert>(await new StreamReader(req.Body).ReadToEndAsync());
+      var user = JsonConvert.DeserializeObject<User>(await new StreamReader(req.Body).ReadToEndAsync());
       var id = ObjectId.GenerateNewId();
 
       var validationContext = new ValidationContext(user, serviceProvider: null, items: null);
@@ -64,11 +48,12 @@ namespace azfunc_cosmosdb
       users_collection.InsertOne(document);
 
       // レスポンスを返す
-      return new OkObjectResult(new {
-        id = id.ToString(),
-        user.Name,
-        user.Profession,
-        user.Age,
+      return new OkObjectResult(new User
+      {
+        Id = id.ToString(),
+        Name = user.Name,
+        Profession = user.Profession,
+        Age = user.Age
       });
     }
   }
