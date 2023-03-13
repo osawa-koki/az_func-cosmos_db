@@ -15,7 +15,12 @@ resource "azurerm_linux_function_app" "az_func" {
   storage_account_name       = azurerm_storage_account.storage_account.name
   storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
   https_only                 = true
-  site_config {}
+
+  site_config {
+    cors {
+      allowed_origins     = ["*"]
+    }
+  }
 
   app_settings = {
     "COSMOSDB_CONNECTION_STRING" = "mongodb://${azurerm_cosmosdb_account.cosmosdb.name}:${azurerm_cosmosdb_account.cosmosdb.primary_key}@${azurerm_cosmosdb_account.cosmosdb.name}.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@${azurerm_cosmosdb_account.cosmosdb.name}@"
