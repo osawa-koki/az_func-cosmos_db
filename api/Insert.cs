@@ -27,7 +27,7 @@ namespace azfunc_cosmosdb
 
     [JsonProperty("age")]
     [Required(ErrorMessage = "The age field is required.")]
-    [Range(1, 200, ErrorMessage = "The age must be between 1 and 200.")]
+    [Range(1, int.MaxValue, ErrorMessage = "The age must be a positive integer.")]
     public int Age { get; set; }
   }
 
