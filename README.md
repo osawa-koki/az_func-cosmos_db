@@ -3,6 +3,10 @@
 🦉🦉🦉 `Azure Function` + `Cosmos DB`でWEBサービスを構築するサンプルです。  
 `Terraform`でAzure上にリソースを構築し、`GitHub Actions`でAzure上のリソースをデプロイします。  
 
+ここでは、簡単なデモとしてユーザの登録・取得・削除・参照を行うAPIを作成しています。  
+
+![成果物](./docs/img/fruit.gif)  
+
 ## 準備
 
 以下のGitHubシークレットを設定します。  
