@@ -23,7 +23,7 @@ namespace azfunc_cosmosdb
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(User), Required = true, Description = "The **User** parameter")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
     public async Task<IActionResult> Insert(
-      [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
+      [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {
       var user = JsonConvert.DeserializeObject<User>(await new StreamReader(req.Body).ReadToEndAsync());
       var id = ObjectId.GenerateNewId();

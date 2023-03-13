@@ -20,7 +20,7 @@ namespace azfunc_cosmosdb
     [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **id** parameter")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
     public async Task<IActionResult> Delete(
-      [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "users/{id}")] HttpRequest req,
+      [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "users/{id}")] HttpRequest req,
       string id)
     {
       var filterBuilder = Builders<BsonDocument>.Filter;
