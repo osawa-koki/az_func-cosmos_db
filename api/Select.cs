@@ -23,7 +23,7 @@ namespace azfunc_cosmosdb
     [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The **name** parameter")]
     [OpenApiParameter(name: "profession", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The **profession** parameter")]
     [OpenApiParameter(name: "age", In = ParameterLocation.Query, Required = false, Type = typeof(int), Description = "The **age** parameter")]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
+    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
     public async Task<IActionResult> Select(
       [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req)
     {

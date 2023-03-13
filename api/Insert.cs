@@ -21,7 +21,7 @@ namespace azfunc_cosmosdb
     [OpenApiOperation(operationId: "Run", tags: new[] { "user" })]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(User), Required = true, Description = "The **User** parameter")]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
+    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
     public async Task<IActionResult> Insert(
       [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
     {
