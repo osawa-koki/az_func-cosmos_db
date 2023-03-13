@@ -9,8 +9,13 @@ on:
     branches:
       - main
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 env:
-  working-directory: ./terraform
+  terraform-directory: ./terraform
+  client-directory: ./client
   AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
   AZURE_FUNCTIONAPP_NAME: ${{ secrets.AZURE_FUNCTIONAPP_NAME }}
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './api'
@@ -28,20 +33,20 @@ jobs:
         terraform_version: 1.4.0
     - name: Create terraform.tfvars file
       run: echo $'${{ secrets.TFVARS }}' > terraform.tfvars
-      working-directory: ${{ env.working-directory }}
+      working-directory: ${{ env.terraform-directory }}
     - name: Terraform Init
       run: terraform init -upgrade
             -backend-config="storage_account_name=${{ secrets.STORAGRE_ACOUNT_NAME }}"
             -backend-config="container_name=${{ secrets.CONTAINER_NAME }}"
             -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}"
-      working-directory: ${{ env.working-directory }}
+      working-directory: ${{ env.terraform-directory }}
     - name: Terraform Plan
       run: terraform plan
-      working-directory: ${{ env.working-directory }}
+      working-directory: ${{ env.terraform-directory }}
     - name: Terraform Apply
       run: terraform apply --auto-approve
-      working-directory: ${{ env.working-directory }}
-  build-and-deploy:
+      working-directory: ${{ env.terraform-directory }}
+  azufunc-build-deploy:
     runs-on: ubuntu-latest
     needs: terraform
     steps:
@@ -71,3 +76,45 @@ jobs:
         app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
         package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
         publish-profile: ${{ env.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+  nextjs-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: yarn
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+        with:
+          static_site_generator: next
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ${{ env.client-directory }}
+      - name: Build with Next.js
+        run: yarn build
+        working-directory: ${{ env.client-directory }}
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ${{ env.client-directory }}/dist
+  nextjs-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: nextjs-build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
