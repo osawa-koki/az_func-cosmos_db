@@ -80,6 +80,33 @@ az ad sp create-for-rbac --name "★プリンシパル名★" --role contributor
 これらを`terraform.tfvars`に記載します。  
 また、このJSON全体を`AZURE_CREDENTIALS`という名前でGitHubシークレットに設定します。  
 
+## 開発環境の構築
+
+### Azure Functionsのローカル実行
+
+`Visual Studio`から実行すればOK!です。  
+`local.settings.json.example`を`local.settings.json`にリネームして下さい。  
+CORSとMongoDBの接続情報が記載されています。  
+特に特殊な環境でなければそのままでOKです。  
+
+### Next.jsのローカル実行
+
+以下のコマンドで実行します。  
+
+```shell
+cd ./client
+yarn install
+yarn dev
+```
+
+## MongoDBのローカル実行
+
+以下のコマンドで実行します。  
+
+```shell
+docker-compose up -d
+```
+
 ## 参考文献
 
 - [GitHub Actionsを使用した継続的デリバリー](https://learn.microsoft.com/ja-jp/azure/azure-functions/functions-how-to-github-actions?tabs=dotnet)
