@@ -5,17 +5,27 @@ export default function AboutPage() {
   return (
     <Layout>
       <div id="About">
-        <h1>Here, About page.</h1>
-        <p className="mt-3">
-          Next.js大好きです。<br />
-          本当に使いやすいです。<br />
-          僕はTypeScript × Next.jsを強くオススメします。<br />
+        <h1>🐙 Az Func × Cosmos DB 🐙</h1>
+        <div className="mt-3">
+          <h2>🐢 Azure Functions</h2>
+          `Azure Functions`はサーバレスアーキテクチャの一つで、<br />
+          イベントドリブンなアプリケーションを構築するためのサービスです。<br />
           <br />
-          静的型付け言語って難しいと思われがちですが、エディタの機能が豊富な現在は型付け言語の方が簡単に書くことができます。<br />
-          さらには字句解析と構文解析に加えて、コンパイル時に、コンパイラによる意味解析を行ってくれるため、動的型付け言語と比較して動作に信頼性があります。<br />
+          FaaS(Function as a Service)とも呼ばれ、サーバーを用意する必要がなく、その分コストが安くなります。<br />
+          また、管理が簡単なので、開発者が開発に集中できます。<br />
           <br />
-          また、Reactと比べてNext.jsはSSGによってビルド時にHTMLが生成されるため、SPA(SSR)と比べて高速に動作し、ユーザビリティが高いです。
-        </p>
+          AWSではLambda、GCPではCloud Functionsというサービスがあります。
+        </div>
+        <div className="mt-3">
+          <h2>🐬 Cosmos DB</h2>
+          `Cosmos DB`は、Azure上で動くNoSQLデータベースです。<br />
+          <br />
+          SQLやMongoDB、Cassandraなどのデータベースをサポートしており、<br />
+          それぞれのデータベースの特徴を活かしながら、データベースを選択することができます。<br />
+          <br />
+          また、Azure上で動くため、Azureのサービスと連携することができます。<br />
+          例えば、Azure Functionsと連携することで、Azure FunctionsのトリガーとしてCosmos DBを使用することができます。
+        </div>
       </div>
     </Layout>
   );
