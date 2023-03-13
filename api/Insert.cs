@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -13,10 +15,19 @@ using Newtonsoft.Json;
 
 namespace azfunc_cosmosdb
 {
-  public struct User
+  public class User
   {
+    [JsonProperty("name")]
+    [Required(ErrorMessage = "The name field is required.")]
     public string Name { get; set; }
+
+    [JsonProperty("profession")]
+    [Required(ErrorMessage = "The profession field is required.")]
     public string Profession { get; set; }
+
+    [JsonProperty("age")]
+    [Required(ErrorMessage = "The age field is required.")]
+    [Range(1, 200, ErrorMessage = "The age must be between 1 and 200.")]
     public int Age { get; set; }
   }
 
@@ -35,6 +46,14 @@ namespace azfunc_cosmosdb
       // ドキュメントを作成
       var user = JsonConvert.DeserializeObject<User>(await new StreamReader(req.Body).ReadToEndAsync());
       var id = ObjectId.GenerateNewId();
+
+      var validationContext = new ValidationContext(user, serviceProvider: null, items: null);
+      var validationResults = new List<ValidationResult>();
+      bool isValid = Validator.TryValidateObject(user, validationContext, validationResults, true);
+      if (isValid == false)
+      {
+        return new BadRequestObjectResult(validationResults);
+      }
 
       var document = new BsonDocument
       {
