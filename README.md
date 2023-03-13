@@ -3,6 +3,39 @@
 🦉🦉🦉 `Azure Function` + `Cosmos DB`でWEBサービスを構築するサンプルです。  
 `Terraform`でAzure上にリソースを構築し、`GitHub Actions`でAzure上のリソースをデプロイします。  
 
+ここでは、簡単なデモとしてユーザの登録・取得・削除・参照を行うAPIを作成しています。  
+
+![成果物](./docs/img/fruit.gif)  
+
+## 使用している技術
+
+- Azure
+  - Azure Functions
+  - Cosmos DB (MongoDB)
+  - Azure Storage Account
+  - Azure App Service
+- Terraform
+  - Backend Service
+- GitHub
+  - Repository
+  - GitHub Actions
+  - GitHub Pages
+- .NET6.0
+  - C#
+- Next.js
+  - React
+  - TypeScript
+
+インフラはTerraformで構築しています。  
+これはAzure Blob Storageを使用したバックエンドサービスになっています。  
+GitHub ActionsでTerraformのコマンドを実行しています。  
+
+サーバサイドはAzure Functionsで構築しています。  
+これもGitHub Actionsでデプロイしています。  
+
+フロントエンドはNext.jsで構築しています。  
+GitHub Pagesでホスティングしています。  
+
 ## 準備
 
 以下のGitHubシークレットを設定します。  

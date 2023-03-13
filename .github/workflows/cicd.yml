@@ -8,6 +8,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -88,8 +93,6 @@ jobs:
           cache-dependency-path: ./**/yarn.lock
       - name: Setup Pages
         uses: actions/configure-pages@v2
-        with:
-          static_site_generator: next
       - name: Restore cache
         uses: actions/cache@v3
         with:

@@ -4,7 +4,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const setting = {
   isProd,
   basePath: Env.basePath,
-  apiPath: isProd ? '' : 'http://localhost:8000/api',
+  apiPath: isProd ? 'https://azfunc-cosmosdb-func.azurewebsites.net/api' : 'http://localhost:8000/api',
   title: '🐙 Az Func × Cosmos DB 🐙',
   smallWaitingTime: 100,
   waitingTime: 3000,

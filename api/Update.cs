@@ -25,7 +25,7 @@ namespace azfunc_cosmosdb
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(User), Required = true, Description = "The **UserUpdate** parameter")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
     public async Task<IActionResult> Update(
-      [HttpTrigger(AuthorizationLevel.Function, "put", Route = "users/{id}")] HttpRequest req,
+      [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "users/{id}")] HttpRequest req,
       string id)
     {
       var filterBuilder = Builders<BsonDocument>.Filter;
