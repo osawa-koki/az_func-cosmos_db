@@ -18,8 +18,12 @@ resource "azurerm_linux_function_app" "az_func" {
 
   site_config {
     cors {
-      allowed_origins     = ["*"]
+      allowed_origins = ["*"]
     }
+  }
+
+  auth_settings {
+    enabled = false
   }
 
   app_settings = {
