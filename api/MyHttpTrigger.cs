@@ -13,15 +13,8 @@ using Newtonsoft.Json;
 
 namespace azfunc_cosmosdb
 {
-  public class MyHttpTrigger
+  public partial class Program
   {
-    private readonly ILogger<MyHttpTrigger> _logger;
-
-    public MyHttpTrigger(ILogger<MyHttpTrigger> log)
-    {
-      _logger = log;
-    }
-
     [FunctionName("MyHttpTrigger")]
     [OpenApiOperation(operationId: "Run", tags: new[] { "name" })]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
@@ -46,4 +39,3 @@ namespace azfunc_cosmosdb
     }
   }
 }
-
