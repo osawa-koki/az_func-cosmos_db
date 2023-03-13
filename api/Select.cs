@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -50,9 +52,17 @@ namespace azfunc_cosmosdb
         filter = filter & filterBuilder.Eq("age", int.Parse(age));
       }
 
-      var documents = await users_collection.Find(filter).ToListAsync();
+      List<BsonDocument> documents = await users_collection.Find(filter).ToListAsync();
 
-      return new OkObjectResult(documents);
+      List<User> users = documents.Select(document => new User
+      {
+        Id = document["_id"].ToString(),
+        Name = document["name"].ToString(),
+        Profession = document["profession"].ToString(),
+        Age = int.Parse(document["age"].ToString())
+      }).ToList();
+
+      return new OkObjectResult(users);
     }
   }
 }
