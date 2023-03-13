@@ -77,6 +77,33 @@ export default function InsertPage() {
     }));
   };
 
+  const Update = async (user: User) => {
+    setState(['info', 'Updating...']);
+    await new Promise((resolve) => setTimeout(resolve, setting.smallWaitingTime));
+    const res = await fetch(`${setting.apiPath}/users/${user.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
+    if (res.ok === false) {
+      setState(['danger', 'Update failed...']);
+      await new Promise((resolve) => setTimeout(resolve, setting.waitingTime));
+      setState(['secondary', '']);
+      return;
+    }
+    setState(['primary', 'Update success!']);
+    setUsers(users.map((_user) => {
+      if (user.id === _user.id) {
+        return user;
+      }
+      return _user;
+    }));
+    await new Promise((resolve) => setTimeout(resolve, setting.waitingTime));
+    setState(['secondary', '']);
+  }
+
   return (
     <Layout>
       <div id="Contact">
@@ -129,7 +156,7 @@ export default function InsertPage() {
           </tbody>
         </Table>
         {
-          edit_mode && <EditComponent delete_func={() => {setEditMode(false)}} user={edit_user} />
+          edit_mode && <EditComponent close_func={() => {setEditMode(false)}} update_func={Update} user={edit_user} />
         }
       </div>
     </Layout>
