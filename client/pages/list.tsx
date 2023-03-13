@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { Button, Alert, Form, Table } from 'react-bootstrap';
+import { EditComponent } from "../components/Edit";
 import Layout from "../components/Layout";
 import User from "../interface/User";
 import setting from "../setting";
@@ -13,6 +14,8 @@ export default function InsertPage() {
   const [age, setAge] = useState<number>();
   const [state, setState] = useState<['primary' | 'danger' | 'info' | 'secondary', string]>(['secondary', '']);
   const [users, setUsers] = useState<User[]>([]);
+  const [edit_mode, setEditMode] = useState<boolean>(false);
+  const [edit_user, setEditUser] = useState<User>();
 
   const Search = async () => {
     const condition = {};
@@ -67,6 +70,13 @@ export default function InsertPage() {
     setState(['secondary', '']);
   };
 
+  const Edit = async (id: string) => {
+    setEditMode(true);
+    setEditUser(users.find((user) => {
+      return user.id === id;
+    }));
+  };
+
   return (
     <Layout>
       <div id="Contact">
@@ -110,7 +120,7 @@ export default function InsertPage() {
                     <td>{user.name}</td>
                     <td>{user.profession}</td>
                     <td>{user.age}</td>
-                    <td><Button variant="success" size="sm" className="d-block m-auto">Edit</Button></td>
+                    <td><Button variant="success" size="sm" className="d-block m-auto" onClick={() => {Edit(user.id)}}>Edit</Button></td>
                     <td><Button variant="danger" size="sm" onClick={() => {Delete(user.id)}} className="d-block m-auto">Delete</Button></td>
                   </tr>
                 )
@@ -118,6 +128,9 @@ export default function InsertPage() {
             }
           </tbody>
         </Table>
+        {
+          edit_mode && <EditComponent delete_func={() => {setEditMode(false)}} user={edit_user} />
+        }
       </div>
     </Layout>
   );
