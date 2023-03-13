@@ -80,6 +80,8 @@ az ad sp create-for-rbac --name "★プリンシパル名★" --role contributor
 これらを`terraform.tfvars`に記載します。  
 また、このJSON全体を`AZURE_CREDENTIALS`という名前でGitHubシークレットに設定します。  
 
+`terraform.tfvars`のテンプレートは`terraform.tfvars.example`を参照してください。  
+
 ## 開発環境の構築
 
 ### Azure Functionsのローカル実行
